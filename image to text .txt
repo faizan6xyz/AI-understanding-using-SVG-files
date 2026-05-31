@@ -1,2 +1,2 @@
 OCR (optical character recognition) in a transformer is used for extracting the text from the image 
-ViT (vistion transformer ) is used for understand the image 
+ViT (vistion transformer ) is used for understand the image and use the understand for futher purpose 
