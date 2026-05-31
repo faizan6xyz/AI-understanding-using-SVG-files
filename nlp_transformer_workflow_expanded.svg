@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 2260" width="1100" height="2260" font-family="Segoe UI, Arial, sans-serif">
+
+  <!-- BACKGROUND -->
+  <rect width="1100" height="2260" fill="#F7F8FC"/>
+
+  <!-- ARROW MARKERS -->
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1L9 5L1 9" fill="none" stroke="#64748B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arr-purple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M1 1L9 5L1 9" fill="none" stroke="#7C3AED" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arr-teal" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M1 1L9 5L1 9" fill="none" stroke="#0F6E56" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M1 1L9 5L1 9" fill="none" stroke="#1D4ED8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- TITLE -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <rect x="30" y="18" width="1040" height="72" rx="12" fill="#1E1E2E"/>
+  <text x="550" y="46" text-anchor="middle" font-size="22" font-weight="700" fill="#E8E8F8">NLP using Transformers — Complete Workflow</text>
+  <text x="550" y="72" text-anchor="middle" font-size="13" fill="#A0A0C0">Raw text → tokenisation → embeddings → attention → encoder / decoder → pre-train → fine-tune → decode → metrics</text>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- STAGE 1 — RAW TEXT INPUT -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <rect x="30" y="108" width="1040" height="30" rx="6" fill="#3B4A6B"/>
+  <text x="550" y="128" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">STAGE 1 — RAW TEXT INPUT</text>
+
+  <rect x="60" y="152" width="980" height="96" rx="10" fill="#EEF2FF" stroke="#6366F1" stroke-width="1.5"/>
+  <text x="550" y="178" text-anchor="middle" font-size="14" font-weight="700" fill="#3730A3">Unstructured natural language — any form, any domain</text>
+  <text x="80" y="202" font-size="12" font-weight="600" fill="#4338CA">Examples:</text>
+  <text x="163" y="202" font-size="12" fill="#4338CA">"Translate: The cat sat on the mat."  ·  News articles  ·  Customer reviews  ·  Code comments  ·  Q&amp;A pairs</text>
+  <text x="80" y="222" font-size="12" font-weight="600" fill="#4338CA">Challenges:</text>
+  <text x="170" y="222" font-size="12" fill="#4338CA">ambiguity, coreference, long-range dependencies, domain shift, multilingual, noisy/informal text</text>
+  <text x="80" y="240" font-size="12" font-weight="600" fill="#4338CA">Cleaning:</text>
+  <text x="158" y="240" font-size="12" fill="#4338CA">lowercase, strip HTML, remove control chars, unicode normalise (NFC), deduplicate lines</text>
+
+  <!-- arrow -->
+  <line x1="550" y1="250" x2="550" y2="278" stroke="#64748B" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="560" y="268" font-size="11" fill="#64748B">tokenise</text>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- STAGE 2 — TOKENISATION -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <rect x="30" y="282" width="1040" height="30" rx="6" fill="#3C1F7A"/>
+  <text x="550" y="302" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">STAGE 2 — TOKENISATION  (§1)</text>
+
+  <!-- 3 algorithm boxes -->
+  <rect x="60" y="326" width="300" height="148" rx="10" fill="#EDE9FE" stroke="#7C3AED" stroke-width="1.5"/>
+  <text x="210" y="348" text-anchor="middle" font-size="13" font-weight="700" fill="#4C1D95">① BPE (Byte-Pair Encoding)</text>
+  <text x="78" y="368" font-size="11" fill="#5B21B6">• Merge most frequent byte pairs</text>
+  <text x="78" y="384" font-size="11" fill="#5B21B6">• Used by: GPT-2, GPT-3, RoBERTa</text>
+  <text x="78" y="400" font-size="11" fill="#5B21B6">• Vocab: 50 000 – 100 000 tokens</text>
+  <text x="78" y="416" font-size="11" fill="#5B21B6">• "playing" → ["play", "##ing"]</text>
+  <text x="78" y="432" font-size="11" fill="#5B21B6">• Handles rare/OOV words via</text>
+  <text x="78" y="448" font-size="11" fill="#5B21B6">  subword splits</text>
+  <text x="78" y="464" font-size="10" font-style="italic" fill="#7C3AED">lib: tiktoken, tokenizers</text>
+
+  <rect x="390" y="326" width="300" height="148" rx="10" fill="#EDE9FE" stroke="#7C3AED" stroke-width="1.5"/>
+  <text x="540" y="348" text-anchor="middle" font-size="13" font-weight="700" fill="#4C1D95">② WordPiece</text>
+  <text x="408" y="368" font-size="11" fill="#5B21B6">• Maximise language model likelihood</text>
+  <text x="408" y="384" font-size="11" fill="#5B21B6">• Used by: BERT, DistilBERT</text>
+  <text x="408" y="400" font-size="11" fill="#5B21B6">• Special tokens: [CLS], [SEP], [MASK]</text>
+  <text x="408" y="416" font-size="11" fill="#5B21B6">• "unaffordable" → ["un","##afford","##able"]</text>
+  <text x="408" y="432" font-size="11" fill="#5B21B6">• Vocab size: 30 000 – 32 000</text>
+  <text x="408" y="464" font-size="10" font-style="italic" fill="#7C3AED">lib: HuggingFace tokenizers</text>
+
+  <rect x="720" y="326" width="320" height="148" rx="10" fill="#EDE9FE" stroke="#7C3AED" stroke-width="1.5"/>
+  <text x="880" y="348" text-anchor="middle" font-size="13" font-weight="700" fill="#4C1D95">③ SentencePiece / Unigram</text>
+  <text x="738" y="368" font-size="11" fill="#5B21B6">• Language-agnostic (no whitespace)</text>
+  <text x="738" y="384" font-size="11" fill="#5B21B6">• Used by: T5, LLaMA, mT5, XLNet</text>
+  <text x="738" y="400" font-size="11" fill="#5B21B6">• Works directly on raw bytes</text>
+  <text x="738" y="416" font-size="11" fill="#5B21B6">• Best for multilingual/CJK text</text>
+  <text x="738" y="432" font-size="11" fill="#5B21B6">• "▁Hello▁World" (▁ = word start)</text>
+  <text x="738" y="464" font-size="10" font-style="italic" fill="#7C3AED">lib: sentencepiece, tokenizers</text>
+
+  <!-- arrows between boxes -->
+  <line x1="360" y1="400" x2="388" y2="400" stroke="#7C3AED" stroke-width="1.5" marker-end="url(#arr-purple)"/>
+  <line x1="690" y1="400" x2="718" y2="400" stroke="#7C3AED" stroke-width="1.5" marker-end="url(#arr-purple)"/>
+
+  <!-- output note -->
+  <rect x="60" y="486" width="980" height="46" rx="8" fill="#DDD6FE" stroke="#8B5CF6" stroke-width="1"/>
+  <text x="550" y="504" text-anchor="middle" font-size="12" font-weight="700" fill="#4C1D95">Tokeniser outputs:</text>
+  <text x="550" y="522" text-anchor="middle" font-size="12" fill="#5B21B6">input_ids [batch, seq_len]  ·  attention_mask [batch, seq_len]  ·  token_type_ids [batch, seq_len]  ·  special tokens [CLS]=101, [SEP]=102</text>
+
+  <line x1="550" y1="534" x2="550" y2="562" stroke="#64748B" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="560" y="552" font-size="11" fill="#64748B">embed</text>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- STAGE 3 — EMBEDDINGS -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <rect x="30" y="566" width="1040" height="30" rx="6" fill="#065F46"/>
+  <text x="550" y="586" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">STAGE 3 — EMBEDDINGS  (§2)</text>
+
+  <!-- token embed -->
+  <rect x="60" y="610" width="300" height="130" rx="10" fill="#ECFDF5" stroke="#10B981" stroke-width="1.5"/>
+  <text x="210" y="632" text-anchor="middle" font-size="13" font-weight="700" fill="#065F46">① Token embedding</text>
+  <text x="78" y="652" font-size="11" fill="#047857">• Lookup table: [vocab, d_model]</text>
+  <text x="78" y="668" font-size="11" fill="#047857">• Each token ID → d_model vector</text>
+  <text x="78" y="684" font-size="11" fill="#047857">• d_model: 256 / 512 / 768 / 1024</text>
+  <text x="78" y="700" font-size="11" fill="#047857">• Trained from random init</text>
+  <text x="78" y="720" font-size="10" font-style="italic" fill="#10B981">nn.Embedding(vocab_size, d_model)</text>
+
+  <!-- positional embed -->
+  <rect x="390" y="610" width="300" height="130" rx="10" fill="#ECFDF5" stroke="#10B981" stroke-width="1.5"/>
+  <text x="540" y="632" text-anchor="middle" font-size="13" font-weight="700" fill="#065F46">② Positional encoding</text>
+  <text x="408" y="652" font-size="11" fill="#047857">• Sinusoidal (original): deterministic</text>
+  <text x="408" y="668" font-size="11" fill="#047857">  PE(p,2i)=sin(p/10000^(2i/d))</text>
+  <text x="408" y="684" font-size="11" fill="#047857">• Learned absolute (BERT, GPT)</text>
+  <text x="408" y="700" font-size="11" fill="#047857">• Relative (T5, Transformer-XL)</text>
+  <text x="408" y="716" font-size="11" fill="#047857">• Rotary RoPE (LLaMA, GPT-NeoX)</text>
+  <text x="408" y="732" font-size="10" font-style="italic" fill="#10B981">Added element-wise to token embed</text>
+
+  <!-- segment embed -->
+  <rect x="720" y="610" width="320" height="130" rx="10" fill="#ECFDF5" stroke="#10B981" stroke-width="1.5"/>
+  <text x="880" y="632" text-anchor="middle" font-size="13" font-weight="700" fill="#065F46">③ Segment + LayerNorm</text>
+  <text x="738" y="652" font-size="11" fill="#047857">• Segment: 0=Sentence A, 1=B (BERT)</text>
+  <text x="738" y="668" font-size="11" fill="#047857">• Distinguishes sentence pairs</text>
+  <text x="738" y="684" font-size="11" fill="#047857">• LayerNorm(token + pos + seg)</text>
+  <text x="738" y="700" font-size="11" fill="#047857">• Dropout (p=0.1) after norm</text>
+  <text x="738" y="720" font-size="10" font-style="italic" fill="#10B981">Output: [batch, seq_len, d_model]</text>
+
+  <!-- sum arrow + output -->
+  <rect x="60" y="752" width="980" height="38" rx="8" fill="#BBF7D0" stroke="#10B981" stroke-width="1"/>
+  <text x="550" y="764" text-anchor="middle" font-size="12" font-weight="700" fill="#065F46">Combined embedding:</text>
+  <text x="550" y="782" text-anchor="middle" font-size="12" fill="#047857">E(x) = TokenEmbed(id) + PositionalEmbed(pos) + SegmentEmbed(seg)  →  LayerNorm  →  Dropout</text>
+
+  <line x1="550" y1="792" x2="550" y2="820" stroke="#64748B" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="560" y="810" font-size="11" fill="#64748B">attend</text>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- STAGE 4 — MULTI-HEAD SELF-ATTENTION -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <rect x="30" y="824" width="1040" height="30" rx="6" fill="#134E4A"/>
+  <text x="550" y="844" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">STAGE 4 — MULTI-HEAD SELF-ATTENTION  (§3)</text>
+
+  <!-- QKV box -->
+  <rect x="60" y="868" width="980" height="190" rx="12" fill="#F0FDF4" stroke="#0F6E56" stroke-width="2"/>
+  <text x="550" y="890" text-anchor="middle" font-size="13" font-weight="700" fill="#134E4A">Scaled Dot-Product Attention — repeated H times in parallel (multi-head)</text>
+
+  <rect x="80" y="900" width="280" height="140" rx="8" fill="#D1FAE5" stroke="#34D399" stroke-width="1"/>
+  <text x="220" y="920" text-anchor="middle" font-size="12" font-weight="700" fill="#064E3B">Step A — Project Q, K, V</text>
+  <text x="95" y="940" font-size="11" fill="#065F46">• Q = X · W_Q   [d_model → d_k]</text>
+  <text x="95" y="956" font-size="11" fill="#065F46">• K = X · W_K   [d_model → d_k]</text>
+  <text x="95" y="972" font-size="11" fill="#065F46">• V = X · W_V   [d_model → d_v]</text>
+  <text x="95" y="988" font-size="11" fill="#065F46">• d_k = d_v = d_model / H</text>
+  <text x="95" y="1004" font-size="11" fill="#065F46">• e.g. 512/8 = 64 per head</text>
+  <text x="95" y="1030" font-size="10" font-style="italic" fill="#0F6E56">shape: [B, H, seq, d_k]</text>
+
+  <line x1="360" y1="970" x2="390" y2="970" stroke="#0F6E56" stroke-width="1.5" marker-end="url(#arr-teal)"/>
+
+  <rect x="392" y="900" width="280" height="140" rx="8" fill="#D1FAE5" stroke="#34D399" stroke-width="1"/>
+  <text x="532" y="920" text-anchor="middle" font-size="12" font-weight="700" fill="#064E3B">Step B — Scaled dot product</text>
+  <text x="408" y="940" font-size="11" fill="#065F46">• scores = Q · Kᵀ / √d_k</text>
+  <text x="408" y="956" font-size="11" fill="#065F46">• Scaling prevents vanishing grad</text>
+  <text x="408" y="972" font-size="11" fill="#065F46">• Causal mask (decoder): -inf future</text>
+  <text x="408" y="988" font-size="11" fill="#065F46">• attn = softmax(scores)</text>
+  <text x="408" y="1004" font-size="11" fill="#065F46">• Dropout on attention weights</text>
+  <text x="408" y="1030" font-size="10" font-style="italic" fill="#0F6E56">shape: [B, H, seq, seq]</text>
+
+  <line x1="672" y1="970" x2="702" y2="970" stroke="#0F6E56" stroke-width="1.5" marker-end="url(#arr-teal)"/>
+
+  <rect x="704" y="900" width="316" height="140" rx="8" fill="#D1FAE5" stroke="#34D399" stroke-width="1"/>
+  <text x="862" y="920" text-anchor="middle" font-size="12" font-weight="700" fill="#064E3B">Step C — Context + concat</text>
+  <text x="720" y="940" font-size="11" fill="#065F46">• context = attn · V</text>
+  <text x="720" y="956" font-size="11" fill="#065F46">• Concat all H heads</text>
+  <text x="720" y="972" font-size="11" fill="#065F46">• Linear projection W_O</text>
+  <text x="720" y="988" font-size="11" fill="#065F46">• Output same dim as input</text>
+  <text x="720" y="1004" font-size="11" fill="#065F46">• Residual: x = x + MHSA(x)</text>
+  <text x="720" y="1030" font-size="10" font-style="italic" fill="#0F6E56">shape: [B, seq, d_model]</text>
+
+  <!-- formula bar -->
+  <rect x="60" y="1062" width="980" height="36" rx="8" fill="#BBF7D0" stroke="#10B981" stroke-width="1"/>
+  <text x="550" y="1080" text-anchor="middle" font-size="13" font-weight="600" fill="#064E3B">Attention(Q,K,V) = softmax(QKᵀ / √d_k) · V      MultiHead = Concat(head₁…headₕ) · W_O</text>
+
+  <!-- fork arrows to encoder and decoder -->
+  <line x1="550" y1="1100" x2="550" y2="1120" stroke="#64748B" stroke-width="2" marker-end="url(#arr)"/>
+  <!-- horizontal split line -->
+  <line x1="280" y1="1120" x2="820" y2="1120" stroke="#94A3B8" stroke-width="1"/>
+  <line x1="280" y1="1120" x2="280" y2="1140" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="820" y1="1120" x2="820" y2="1140" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="390" y="1134" font-size="11" fill="#64748B">encoder path</text>
+  <text x="660" y="1134" font-size="11" fill="#64748B">decoder path</text>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- STAGE 5 — ENCODER & DECODER SIDE BY SIDE -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <rect x="30" y="1144" width="1040" height="30" rx="6" fill="#1E3A5F"/>
+  <text x="550" y="1164" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">STAGE 5 — ENCODER (§4)  vs  DECODER (§5)</text>
+
+  <!-- ENCODER box -->
+  <rect x="60" y="1188" width="480" height="240" rx="12" fill="#EFF6FF" stroke="#2563EB" stroke-width="2"/>
+  <text x="300" y="1210" text-anchor="middle" font-size="14" font-weight="700" fill="#1E3A5F">Encoder — BERT / RoBERTa style</text>
+  <text x="300" y="1228" text-anchor="middle" font-size="12" fill="#1D4ED8">Bidirectional: every token sees all tokens</text>
+
+  <rect x="80" y="1238" width="440" height="40" rx="6" fill="#BFDBFE" stroke="#3B82F6" stroke-width="1"/>
+  <text x="300" y="1252" text-anchor="middle" font-size="11" font-weight="700" fill="#1E3A5F">Multi-Head Self-Attention (bidirectional)</text>
+  <text x="300" y="1268" text-anchor="middle" font-size="11" fill="#1D4ED8">Q = K = V = input embeddings, NO causal mask</text>
+
+  <rect x="80" y="1286" width="440" height="26" rx="6" fill="#BFDBFE" stroke="#3B82F6" stroke-width="1"/>
+  <text x="300" y="1303" text-anchor="middle" font-size="11" font-weight="700" fill="#1E3A5F">Add &amp; LayerNorm  →  x = LN(x + MHSA(x))</text>
+
+  <rect x="80" y="1320" width="440" height="40" rx="6" fill="#BFDBFE" stroke="#3B82F6" stroke-width="1"/>
+  <text x="300" y="1334" text-anchor="middle" font-size="11" font-weight="700" fill="#1E3A5F">Feed-Forward Network</text>
+  <text x="300" y="1350" text-anchor="middle" font-size="11" fill="#1D4ED8">Linear(d→4d) → GELU → Dropout → Linear(4d→d)</text>
+
+  <rect x="80" y="1368" width="440" height="26" rx="6" fill="#BFDBFE" stroke="#3B82F6" stroke-width="1"/>
+  <text x="300" y="1385" text-anchor="middle" font-size="11" font-weight="700" fill="#1E3A5F">Add &amp; LayerNorm  →  x = LN(x + FFN(x))</text>
+
+  <text x="300" y="1412" text-anchor="middle" font-size="11" font-style="italic" fill="#1D4ED8">Repeat N times (BERT-base: N=12, BERT-large: N=24)</text>
+
+  <!-- DECODER box -->
+  <rect x="560" y="1188" width="480" height="240" rx="12" fill="#FFF7ED" stroke="#EA580C" stroke-width="2"/>
+  <text x="800" y="1210" text-anchor="middle" font-size="14" font-weight="700" fill="#7C2D12">Decoder — GPT / T5 style</text>
+  <text x="800" y="1228" text-anchor="middle" font-size="12" fill="#C2410C">Causal (autoregressive): no future tokens</text>
+
+  <rect x="580" y="1238" width="440" height="40" rx="6" fill="#FED7AA" stroke="#F97316" stroke-width="1"/>
+  <text x="800" y="1252" text-anchor="middle" font-size="11" font-weight="700" fill="#7C2D12">Masked Multi-Head Self-Attention</text>
+  <text x="800" y="1268" text-anchor="middle" font-size="11" fill="#C2410C">Lower-triangular mask: token i cannot see token j&gt;i</text>
+
+  <rect x="580" y="1286" width="440" height="26" rx="6" fill="#FED7AA" stroke="#F97316" stroke-width="1"/>
+  <text x="800" y="1303" text-anchor="middle" font-size="11" font-weight="700" fill="#7C2D12">Cross-Attention (Seq2Seq only: T5, BART)</text>
+
+  <rect x="580" y="1320" width="440" height="40" rx="6" fill="#FED7AA" stroke="#F97316" stroke-width="1"/>
+  <text x="800" y="1334" text-anchor="middle" font-size="11" font-weight="700" fill="#7C2D12">Feed-Forward Network</text>
+  <text x="800" y="1350" text-anchor="middle" font-size="11" fill="#C2410C">Linear(d→4d) → GELU → Dropout → Linear(4d→d)</text>
+
+  <rect x="580" y="1368" width="440" height="26" rx="6" fill="#FED7AA" stroke="#F97316" stroke-width="1"/>
+  <text x="800" y="1385" text-anchor="middle" font-size="11" font-weight="700" fill="#7C2D12">Add &amp; LayerNorm  →  Linear → Softmax (vocab)</text>
+
+  <text x="800" y="1412" text-anchor="middle" font-size="11" font-style="italic" fill="#C2410C">Repeat N times (GPT-2: N=12–48; GPT-4: est. N=96+)</text>
+
+  <!-- merge arrows -->
+  <line x1="300" y1="1430" x2="300" y2="1456" stroke="#94A3B8" stroke-width="1"/>
+  <line x1="800" y1="1430" x2="800" y2="1456" stroke="#94A3B8" stroke-width="1"/>
+  <line x1="300" y1="1456" x2="800" y2="1456" stroke="#94A3B8" stroke-width="1"/>
+  <line x1="550" y1="1456" x2="550" y2="1476" stroke="#64748B" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="560" y="1470" font-size="11" fill="#64748B">pre-train</text>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- STAGE 6 — PRE-TRAINING TASKS -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <rect x="30" y="1480" width="1040" height="30" rx="6" fill="#713C06"/>
+  <text x="550" y="1500" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">STAGE 6 — PRE-TRAINING TASKS  (§6)</text>
+
+  <rect x="60" y="1524" width="300" height="140" rx="10" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+  <text x="210" y="1546" text-anchor="middle" font-size="13" font-weight="700" fill="#713C06">MLM — Masked LM</text>
+  <text x="78" y="1566" font-size="11" fill="#92400E">• Randomly mask 15% of tokens</text>
+  <text x="78" y="1582" font-size="11" fill="#92400E">• 80% → [MASK], 10% random,</text>
+  <text x="78" y="1596" font-size="11" fill="#92400E">  10% unchanged (BERT trick)</text>
+  <text x="78" y="1612" font-size="11" fill="#92400E">• Predict original token at [MASK]</text>
+  <text x="78" y="1628" font-size="11" fill="#92400E">• Loss: cross-entropy on masked</text>
+  <text x="78" y="1654" font-size="10" font-style="italic" fill="#D97706">Models: BERT, RoBERTa, ALBERT</text>
+
+  <rect x="390" y="1524" width="300" height="140" rx="10" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+  <text x="540" y="1546" text-anchor="middle" font-size="13" font-weight="700" fill="#713C06">CLM — Causal LM</text>
+  <text x="408" y="1566" font-size="11" fill="#92400E">• Predict next token (left→right)</text>
+  <text x="408" y="1582" font-size="11" fill="#92400E">• L = -Σ log P(xₜ | x₁…xₜ₋₁)</text>
+  <text x="408" y="1598" font-size="11" fill="#92400E">• Requires causal/triangular mask</text>
+  <text x="408" y="1614" font-size="11" fill="#92400E">• Naturally supports generation</text>
+  <text x="408" y="1630" font-size="11" fill="#92400E">• Trained on raw text (no labels)</text>
+  <text x="408" y="1654" font-size="10" font-style="italic" fill="#D97706">Models: GPT-2/3/4, LLaMA, PaLM</text>
+
+  <rect x="720" y="1524" width="320" height="140" rx="10" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+  <text x="880" y="1546" text-anchor="middle" font-size="13" font-weight="700" fill="#713C06">NSP / Span / Seq2Seq</text>
+  <text x="738" y="1566" font-size="11" fill="#92400E">• NSP (BERT): is B next sentence?</text>
+  <text x="738" y="1582" font-size="11" fill="#92400E">• SOP (ALBERT): sentence order</text>
+  <text x="738" y="1598" font-size="11" fill="#92400E">• SpanBERT: predict whole spans</text>
+  <text x="738" y="1614" font-size="11" fill="#92400E">• Text-to-Text (T5): convert all</text>
+  <text x="738" y="1630" font-size="11" fill="#92400E">  tasks to string-in → string-out</text>
+  <text x="738" y="1654" font-size="10" font-style="italic" fill="#D97706">Models: T5, BART, mT5, FLAN-T5</text>
+
+  <line x1="550" y1="1666" x2="550" y2="1694" stroke="#64748B" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="560" y="1684" font-size="11" fill="#64748B">fine-tune</text>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- STAGE 7 — FINE-TUNING TASK HEADS -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <rect x="30" y="1698" width="1040" height="30" rx="6" fill="#164E63"/>
+  <text x="550" y="1718" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">STAGE 7 — FINE-TUNING &amp; TASK HEADS  (§7)</text>
+
+  <!-- 4 task head boxes -->
+  <rect x="60" y="1742" width="228" height="150" rx="10" fill="#ECFEFF" stroke="#0891B2" stroke-width="1.5"/>
+  <text x="174" y="1764" text-anchor="middle" font-size="12" font-weight="700" fill="#164E63">Text classification</text>
+  <text x="75" y="1784" font-size="10.5" fill="#0E7490">• [CLS] token → Linear(d, n_cls)</text>
+  <text x="75" y="1800" font-size="10.5" fill="#0E7490">• Softmax → class probs</text>
+  <text x="75" y="1816" font-size="10.5" fill="#0E7490">• Cross-entropy loss</text>
+  <text x="75" y="1832" font-size="10.5" fill="#0E7490">• Tasks: sentiment, topic, NLI</text>
+  <text x="75" y="1848" font-size="10.5" fill="#0E7490">• lr = 2e-5, epochs = 3–5</text>
+  <text x="174" y="1880" text-anchor="middle" font-size="10" font-style="italic" fill="#0891B2">BERT, RoBERTa</text>
+
+  <rect x="306" y="1742" width="228" height="150" rx="10" fill="#ECFEFF" stroke="#0891B2" stroke-width="1.5"/>
+  <text x="420" y="1764" text-anchor="middle" font-size="12" font-weight="700" fill="#164E63">Token classification</text>
+  <text x="321" y="1784" font-size="10.5" fill="#0E7490">• Per-token → Linear(d, n_tags)</text>
+  <text x="321" y="1800" font-size="10.5" fill="#0E7490">• BIO / BIOES tagging scheme</text>
+  <text x="321" y="1816" font-size="10.5" fill="#0E7490">• NER: B-PER, I-PER, O…</text>
+  <text x="321" y="1832" font-size="10.5" fill="#0E7490">• POS tagging, chunking</text>
+  <text x="321" y="1848" font-size="10.5" fill="#0E7490">• Eval metric: seqeval F1</text>
+  <text x="420" y="1880" text-anchor="middle" font-size="10" font-style="italic" fill="#0891B2">BERT-NER, SpanBERT</text>
+
+  <rect x="552" y="1742" width="228" height="150" rx="10" fill="#ECFEFF" stroke="#0891B2" stroke-width="1.5"/>
+  <text x="666" y="1764" text-anchor="middle" font-size="12" font-weight="700" fill="#164E63">Question answering</text>
+  <text x="567" y="1784" font-size="10.5" fill="#0E7490">• Two heads: start + end logit</text>
+  <text x="567" y="1800" font-size="10.5" fill="#0E7490">• Span extraction from context</text>
+  <text x="567" y="1816" font-size="10.5" fill="#0E7490">• [CLS, question, SEP, ctx, SEP]</text>
+  <text x="567" y="1832" font-size="10.5" fill="#0E7490">• argmax start, argmax end</text>
+  <text x="567" y="1848" font-size="10.5" fill="#0E7490">• Eval: Exact Match, F1</text>
+  <text x="666" y="1880" text-anchor="middle" font-size="10" font-style="italic" fill="#0891B2">BERT-SQuAD, ALBERT</text>
+
+  <rect x="798" y="1742" width="282" height="150" rx="10" fill="#ECFEFF" stroke="#0891B2" stroke-width="1.5"/>
+  <text x="939" y="1764" text-anchor="middle" font-size="12" font-weight="700" fill="#164E63">Seq2Seq generation</text>
+  <text x="813" y="1784" font-size="10.5" fill="#0E7490">• Encoder-decoder (T5, BART)</text>
+  <text x="813" y="1800" font-size="10.5" fill="#0E7490">• Teacher forcing in training</text>
+  <text x="813" y="1816" font-size="10.5" fill="#0E7490">• Tasks: summarisation, MT, QA</text>
+  <text x="813" y="1832" font-size="10.5" fill="#0E7490">• LoRA / adapter fine-tune</text>
+  <text x="813" y="1848" font-size="10.5" fill="#0E7490">• PEFT: only 0.1–1% params</text>
+  <text x="939" y="1880" text-anchor="middle" font-size="10" font-style="italic" fill="#0891B2">T5, BART, FLAN-T5</text>
+
+  <!-- training params note -->
+  <rect x="60" y="1898" width="980" height="46" rx="8" fill="#CFFAFE" stroke="#0891B2" stroke-width="1"/>
+  <text x="550" y="1916" text-anchor="middle" font-size="12" font-weight="700" fill="#164E63">Training setup:</text>
+  <text x="550" y="1934" text-anchor="middle" font-size="12" fill="#0E7490">Optimiser: AdamW  ·  lr: 2e-5 → 5e-5  ·  warmup 6–10%  ·  weight_decay 0.01  ·  gradient clip 1.0  ·  FP16 / BF16</text>
+
+  <line x1="550" y1="1946" x2="550" y2="1974" stroke="#64748B" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="560" y="1964" font-size="11" fill="#64748B">decode</text>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- STAGE 8 — DECODING STRATEGIES -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <rect x="30" y="1978" width="1040" height="30" rx="6" fill="#3C1F7A"/>
+  <text x="550" y="1998" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">STAGE 8 — DECODING STRATEGIES  (§9)</text>
+
+  <rect x="60" y="2022" width="300" height="120" rx="10" fill="#EDE9FE" stroke="#7C3AED" stroke-width="1.5"/>
+  <text x="210" y="2044" text-anchor="middle" font-size="13" font-weight="700" fill="#4C1D95">Greedy decoding</text>
+  <text x="78" y="2064" font-size="11" fill="#5B21B6">• argmax P(xₜ | x₁…xₜ₋₁) at each step</text>
+  <text x="78" y="2080" font-size="11" fill="#5B21B6">• Fast, deterministic</text>
+  <text x="78" y="2096" font-size="11" fill="#5B21B6">• May miss globally optimal seq</text>
+  <text x="78" y="2112" font-size="11" fill="#5B21B6">• Best for high-confidence tasks</text>
+  <text x="78" y="2132" font-size="10" font-style="italic" fill="#7C3AED">O(1) candidates per step</text>
+
+  <rect x="390" y="2022" width="300" height="120" rx="10" fill="#EDE9FE" stroke="#7C3AED" stroke-width="1.5"/>
+  <text x="540" y="2044" text-anchor="middle" font-size="13" font-weight="700" fill="#4C1D95">Beam search</text>
+  <text x="408" y="2064" font-size="11" fill="#5B21B6">• Keep top-k sequences (beams)</text>
+  <text x="408" y="2080" font-size="11" fill="#5B21B6">• Score = log P(seq) / length^α</text>
+  <text x="408" y="2096" font-size="11" fill="#5B21B6">• Length penalty α=0.6 typical</text>
+  <text x="408" y="2112" font-size="11" fill="#5B21B6">• Best for translation, summarise</text>
+  <text x="408" y="2132" font-size="10" font-style="italic" fill="#7C3AED">O(beam_width) per step</text>
+
+  <rect x="720" y="2022" width="320" height="120" rx="10" fill="#EDE9FE" stroke="#7C3AED" stroke-width="1.5"/>
+  <text x="880" y="2044" text-anchor="middle" font-size="13" font-weight="700" fill="#4C1D95">Top-p / Top-k sampling</text>
+  <text x="738" y="2064" font-size="11" fill="#5B21B6">• Top-k: sample from k most prob</text>
+  <text x="738" y="2080" font-size="11" fill="#5B21B6">• Top-p (nucleus): CDF ≥ p tokens</text>
+  <text x="738" y="2096" font-size="11" fill="#5B21B6">• Temperature τ: sharpen/flatten</text>
+  <text x="738" y="2112" font-size="11" fill="#5B21B6">• Best for creative generation</text>
+  <text x="738" y="2132" font-size="10" font-style="italic" fill="#7C3AED">p=0.9, τ=0.7–1.0 common</text>
+
+  <line x1="550" y1="2144" x2="550" y2="2172" stroke="#64748B" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="560" y="2162" font-size="11" fill="#64748B">evaluate</text>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- STAGE 9 — EVALUATION METRICS -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <rect x="30" y="2176" width="1040" height="30" rx="6" fill="#14532D"/>
+  <text x="550" y="2196" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">STAGE 9 — EVALUATION METRICS  (§10)</text>
+
+  <rect x="60" y="2220" width="220" height="26" rx="8" fill="#DCFCE7" stroke="#16A34A" stroke-width="1"/>
+  <text x="170" y="2237" text-anchor="middle" font-size="11" font-weight="700" fill="#14532D">BLEU (translation)</text>
+
+  <rect x="298" y="2220" width="220" height="26" rx="8" fill="#DCFCE7" stroke="#16A34A" stroke-width="1"/>
+  <text x="408" y="2237" text-anchor="middle" font-size="11" font-weight="700" fill="#14532D">ROUGE-L (summarisation)</text>
+
+  <rect x="536" y="2220" width="180" height="26" rx="8" fill="#DCFCE7" stroke="#16A34A" stroke-width="1"/>
+  <text x="626" y="2237" text-anchor="middle" font-size="11" font-weight="700" fill="#14532D">F1 / seqeval (NER)</text>
+
+  <rect x="734" y="2220" width="166" height="26" rx="8" fill="#DCFCE7" stroke="#16A34A" stroke-width="1"/>
+  <text x="817" y="2237" text-anchor="middle" font-size="11" font-weight="700" fill="#14532D">Perplexity (LM)</text>
+
+  <rect x="918" y="2220" width="162" height="26" rx="8" fill="#DCFCE7" stroke="#16A34A" stroke-width="1"/>
+  <text x="999" y="2237" text-anchor="middle" font-size="11" font-weight="700" fill="#14532D">BERTScore</text>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- FOOTER -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <rect x="30" y="2210" width="0" height="0"/>
+  <rect x="30" y="2200" width="0" height="0"/>
+
+  <rect x="30" y="2204" width="1040" height="0" rx="0"/>
+
+  <!-- legend bar -->
+  <rect x="30" y="2252" width="1040" height="0" rx="6"/>
+
+  <!-- models timeline footer -->
+  <rect x="30" y="2256" width="1040" height="0" rx="8"/>
+
+  <!-- bottom bar -->
+  <rect x="30" y="2256" width="1040" height="0" rx="8" fill="#1E293B"/>
+
+  <!-- Final model reference row -->
+  <rect x="30" y="2210" width="1040" height="44" rx="8" fill="#1E293B"/>
+  <text x="550" y="2228" text-anchor="middle" font-size="11" fill="#94A3B8">Key model families:</text>
+  <text x="550" y="2244" text-anchor="middle" font-size="11" fill="#CBD5E1">Encoder-only: BERT · RoBERTa · ALBERT · DistilBERT  ·  Decoder-only: GPT-2/3/4 · LLaMA · Mistral · Falcon  ·  Encoder-Decoder: T5 · BART · mT5 · FLAN-T5</text>
+
+</svg>
