@@ -1,0 +1,10 @@
+Step 1 — The encoder (left side, going down)
+    The encoder is basically a standard CNN that reads the image. At each level it applies two 3×3 convolutions with ReLU activation, then a 2×2 max-pooling operation that halves the spatial size (height and width) but doubles the number of feature channels. So it goes: 64 → 128 → 256 → 512 filters. The image shrinks spatially but gets richer in abstract meaning. After four levels, the network has a very compressed, high-level understanding of what is in the image — but it has lost precise location detail.
+Step 2 — The bottleneck (bottom of the U)
+    The bottleneck is the narrowest point. Here the feature maps are at their smallest spatial size but their highest depth (1024 filters). This is where the network holds its most abstract, global representation of the image.
+Step 3 — The decoder (right side, going up)
+    The decoder mirrors the encoder but in reverse. Instead of downsampling, it uses transposed convolutions (sometimes called "upconvolutions") to double the spatial size at each step, reducing filter depth symmetrically. It reconstructs the pixel-level spatial detail step by step, going 512 → 256 → 128 → 64 filters back to the original resolution.
+Step 4 — Skip connections (the key innovation)
+    At every level, the feature maps from the encoder are concatenated directly into the corresponding decoder level — shown as the orange dashed arrows. This is what makes U-Net special. The encoder has precise spatial detail but no semantic meaning; the decoder has semantic understanding but imprecise location. Skip connections merge both, giving the decoder both what it is and exactly where it is at each resolution level.
+Step 5 — Output
+    A final 1×1 convolution maps the 64-channel feature map down to the number of output classes (e.g. 2 for binary segmentation: tumor / not-tumor). The result is a segmentation mask the same size as the input image.
