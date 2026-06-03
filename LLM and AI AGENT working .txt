@@ -1,3 +1,24 @@
+        Working in simple Terms : Agent = Manager , LLM = Brain , Tools = Hands
+            
+            User Input
+                ↓
+            Agent builds a prompt
+                ↓
+            LLM reasons about the task
+                ↓
+            LLM decides what action/tool is needed
+                ↓
+            Agent executes the action
+                ↓
+            Agent sends the result back to the LLM
+                ↓
+            LLM reasons again
+                ↓
+            Repeat until task is complete
+                ↓
+            LLM generates final answer
+
+
 Layer 0 — User Input
     Everything starts with the user sending a goal. This could be a question, a task, a command, or a complex multi-part request. The critical thing to understand is that the agent doesn't just see the user's message in isolation — it assembles a complete context package before the LLM ever sees a single token. That assembly happens in the orchestration layer.
 
@@ -5,7 +26,7 @@ Layer 1 — Orchestration Layer
     This is the invisible backbone that most people never think about. Before the LLM reads anything, the orchestration layer constructs the full "prompt package" from three sources:
     The system prompt defines who the agent is — its identity, the tools it has, the rules it follows, its output format. This runs silently before every single conversation turn. It's the agent's constitution.
     The memory module pulls in everything relevant from the past — prior conversation turns, facts stored from earlier steps, retrieved documents from a vector database. The agent doesn't naturally remember anything between API calls, so the orchestration layer injects that memory manually into the context window.
-    The context assembly step combines everything into one long prompt: system instructions + memory + current conversation + any documents or tool results — then hands it all to the LLM.
+    The context assembly step combines everything into one long prompt: system instructions + memory + current conversation + any documents or tool results — then hands it all to the LLM. (it -> Receives request , Loads memory , Calls LLM , Executes tools , Stores results , Repeats , Returns answer)
 
 Layer 2 — LLM Core (The Brain)
     Now the language model actually runs. Here's the exact sequence inside it:
